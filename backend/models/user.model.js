@@ -21,6 +21,6 @@ const userSchema = new mongoose.Schema({
 userSchema.plugin(aggregatePaginate);
 userSchema.plugin(paginate);
 userSchema.index({ "$**": "text" });
-const User = mongoose.model("User", userSchema, "User");
+const User = mongoose.model("Users", userSchema, "Users");
 
 module.exports = User;

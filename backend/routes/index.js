@@ -8,6 +8,10 @@ const defaultRoutes = [
     path: "/user",
     route: userRoute,
   },
+  {
+    path: "/books",
+    route: userRoute,
+  },
 ];
 
 defaultRoutes.forEach((route) => {

@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route element={<PublicRoutes />}>
           <Route path="*" element={<Navigate to="/" />} />
-          <Route exact path="/" element={<Navigate to="/login" />} />
+          <Route exact path="/" element={<Login />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
         </Route>

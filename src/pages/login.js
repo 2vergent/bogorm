@@ -11,7 +11,6 @@ const Login = () => {
 
   const onFinish = (values) => {
     userLoginApi(values.username, values.password).then((res) => {
-      console.log("loginRes: ", res);
       if (res.data.message === "User is verified") {
         localStorage.setItem("isAuth", "true");
         navigate("/home");
