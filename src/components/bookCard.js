@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Image } from "antd";
+import { Card, Image, Rate } from "antd";
 import axios from "axios";
 
 const { Meta } = Card;
@@ -15,6 +15,7 @@ const BookCard = ({ title }) => {
           `https://www.googleapis.com/books/v1/volumes?q=${title}`
         );
         const book = response.data.items[0].volumeInfo;
+        // console.log("Book details: ", book);
         setBookDetails(book);
         setLoadingBook(false);
       } catch (error) {
@@ -28,14 +29,14 @@ const BookCard = ({ title }) => {
   return (
     <Card
       loading={loadingBook}
-      style={{ width: 150 }}
+      style={{ width: 190 }}
       hoverable
       cover={
         bookDetails && (
           <Image
             alt={bookDetails.title}
             src={bookDetails.imageLinks && bookDetails.imageLinks.thumbnail}
-            height={220}
+            height={270}
           />
         )
       }
@@ -58,6 +59,13 @@ const BookCard = ({ title }) => {
           }
         />
       )}
+      <Rate
+        allowHalf
+        allowClear
+        disabled
+        defaultValue={bookDetails && bookDetails.averageRating}
+        className="mt-10"
+      />
     </Card>
   );
 };

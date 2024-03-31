@@ -1,0 +1,75 @@
+.login-screen {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: #653719;
+}
+
+.logo-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.logo-space {
+  display: flex;
+  margin-bottom: 65px;
+}
+
+.instaxLogo {
+  width: 350px;
+  height: 70px;
+  margin: auto;
+  justify-content: center;
+}
+
+.center-divide {
+  height: 150px;
+  background-color: #111111;
+  width: 1px;
+  border-radius: 10px;
+  margin-bottom: 60px;
+  margin-right: 20px;
+}
+
+.login-main {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider-main {
+  color: #000;
+  width: 10px;
+  height: 150px;
+}
+
+.login-form {
+  width: 300px;
+}
+
+.login-form-button {
+  width: 100%;
+  background-color: #ceb035;
+  box-shadow: none;
+}
+
+.login-form-button:hover {
+  background-color: #45230c !important;
+}
+
+.register-text {
+  padding: 10px;
+  color: #767676;
+}
+
+.actual-register {
+  color: #111111;
+  padding-left: 10px;
+}
+
+.actual-register:hover {
+  color: #767676;
+}

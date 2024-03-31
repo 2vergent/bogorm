@@ -1,0 +1,55 @@
+.signup-screen {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: #653719;
+}
+
+.logo-signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.logo-login-space {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.instaxLogoSignup {
+  width: 350px;
+  height: 70px;
+  margin: auto;
+  justify-content: center;
+}
+
+.center-divide-signup {
+  height: 255px;
+  background-color: #111111;
+  width: 1px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.signup-main {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-form {
+  width: 300px;
+}
+
+.signup-form-button {
+  width: 100%;
+  background-color: #111111;
+  box-shadow: none;
+}
+
+.signup-form-button:hover {
+  background-color: #232323 !important;
+}
