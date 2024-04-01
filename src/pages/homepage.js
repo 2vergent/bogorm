@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "../assets/styles/homepage.css";
-import { Layout, Image, Row, Col, Input, Avatar, Pagination, Spin } from "antd";
-import {
-  SearchOutlined,
-  UserOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
-import { bookTitles } from "../utils/data";
-import BogormLogo from "../assets/icons/bogorm_logo_transparent.png";
+import { Layout, Row, Col, Input, Pagination, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import BookCard from "../components/bookCard";
 import { getBookOnlineApi } from "../api/bookApi";
 import { UserAtom } from "../utils/store";
 import { useRecoilValue } from "recoil";
 import { getUserBooksApi } from "../api/userBookApi";
+import BogormHeader from "../components/header";
 
-const { Header, Content } = Layout;
-const { Search } = Input;
+const { Content } = Layout;
 
 const Homepage = () => {
   const userData = useRecoilValue(UserAtom);
@@ -54,22 +48,12 @@ const Homepage = () => {
 
   return (
     <Layout id="homepage-layout">
-      <Header id="header">
-        <div className="bogorm-logo">
-          <Image id="bogorm" src={BogormLogo} preview={false} width={125} />
-        </div>
-        <Search
-          placeholder="Search Books"
-          enterButton={<SearchOutlined />}
-          size="large"
-          allowClear
-          onPressEnter={(event) => {
-            setLoader(true);
-            handleSearchBook(event.target.value, currentPage, pageSize);
-          }}
-        />
-        <Avatar className="user-icon" icon={<UserOutlined />} />
-      </Header>
+      <BogormHeader
+        onSearch={(event) => {
+          setLoader(true);
+          handleSearchBook(event.target.value, currentPage, pageSize);
+        }}
+      />
       <Content id="homepage-content">
         <div className="content-wrapper">
           <Row>
@@ -136,7 +120,7 @@ const Homepage = () => {
                     })}
                 </Row>
               )}
-              {!loader && (
+              {!loader && userBooks.length !== 0 && (
                 <div className="mt-20 mb-20">
                   <Pagination
                     current={currentPage}

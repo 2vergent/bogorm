@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "./pages/homepage";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
+import BookDetails from "./pages/bookDetails";
 import { PublicRoutes, PrivateRoutes } from "./utils/protectRoute";
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
           <Route exact path="/signup" element={<Signup />} />
         </Route>
         <Route element={<PrivateRoutes />}>
+          <Route path="*" element={<Navigate to="/home" />} />
           <Route exact path="/home" element={<Homepage />} />
+          <Route exact path="/book" element={<BookDetails />} />
         </Route>
       </Routes>
     </div>

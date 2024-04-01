@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { Card, Image, Rate } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import BookDetails from "./bookDetails";
 import { UserAtom } from "../utils/store";
 import { useRecoilValue } from "recoil";
 import { addBookApi } from "../api/bookApi";
@@ -14,15 +14,12 @@ const BookCard = ({ bookDetails, searched }) => {
   // console.log("searched: ", searched);
 
   const [loadingBook, setLoadingBook] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const userData = useRecoilValue(UserAtom);
+  const navigate = useNavigate();
 
   const handleCardClick = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
+    // setIsModalVisible(true);
+    navigate("/book", { state: { book: bookDetails } });
   };
 
   const handleAddBook = (book) => {
@@ -61,6 +58,7 @@ const BookCard = ({ bookDetails, searched }) => {
               alt={bookDetails.title}
               src={bookDetails.imageLinks && bookDetails.imageLinks.thumbnail}
               height={270}
+              preview={false}
             />
           )
         }
@@ -104,11 +102,6 @@ const BookCard = ({ bookDetails, searched }) => {
           className="mt-10"
         /> */}
       </Card>
-      <BookDetails
-        book={bookDetails}
-        visible={isModalVisible}
-        onClose={handleCloseModal}
-      />
     </>
   );
 };

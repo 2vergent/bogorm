@@ -23,6 +23,22 @@ const getUserBooks = async (userId) => {
       $unwind: "$bookDetails",
     },
     {
+      $lookup: {
+        from: "Reviews",
+        localField: "book",
+        foreignField: "book",
+        as: "bookDetails.reviews",
+      },
+    },
+    {
+      $lookup: {
+        from: "Comments",
+        localField: "book",
+        foreignField: "book",
+        as: "bookDetails.comments",
+      },
+    },
+    {
       $project: {
         _id: 0,
         dateAdded: 1,
