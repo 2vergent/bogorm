@@ -41,11 +41,13 @@ const Homepage = () => {
 
   useEffect(() => {
     setLoader(true);
-    getUserBooksApi(userData._id).then((res) => {
-      setLoader(false);
-      setUserBooks(res.data);
-    });
-  }, []);
+    if (searchBook.length === 0) {
+      getUserBooksApi(userData._id).then((res) => {
+        setLoader(false);
+        setUserBooks(res.data);
+      });
+    }
+  }, [searchBook]);
 
   return (
     <Layout id="homepage-layout">
@@ -59,7 +61,7 @@ const Homepage = () => {
         <div className="content-wrapper">
           <Row>
             <Col span={24}>
-              {!loader && userBooks.length === 0 && (
+              {!loader && searchBook.length === 0 && userBooks.length === 0 && (
                 <Empty
                   image={Empty.PRESENTED_IMAGE_SIMPLE}
                   description={
@@ -132,16 +134,18 @@ const Homepage = () => {
                     })}
                 </Row>
               )}
-              {!loader && searchResponse.length !== 0 && (
-                <div className="mt-30 mb-10">
-                  <Pagination
-                    current={currentPage}
-                    pageSize={pageSize}
-                    total={searchResponse.totalItems}
-                    onChange={handlePageChange}
-                  />
-                </div>
-              )}
+              {!loader &&
+                searchBook.length !== 0 &&
+                searchResponse.length !== 0 && (
+                  <div className="mt-30 mb-10">
+                    <Pagination
+                      current={currentPage}
+                      pageSize={pageSize}
+                      total={searchResponse.totalItems}
+                      onChange={handlePageChange}
+                    />
+                  </div>
+                )}
             </Col>
           </Row>
         </div>

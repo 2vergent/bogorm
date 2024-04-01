@@ -34,7 +34,7 @@ const BookCard = ({ bookDetails, searched }) => {
     }).then((newBook) => {
       addUserBookApi(userData._id, newBook.data.book._id).then((res) => {
         setLoadingBook(false);
-        if (newBook.data.message === "Book already exists") {
+        if (res.data.message === "Book already exists") {
           message.warning("This book is already in your library");
         } else {
           message.success("Book added to your library");

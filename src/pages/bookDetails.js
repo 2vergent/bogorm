@@ -188,6 +188,7 @@ const BookDetails = () => {
                       style={{ width: "100%" }}
                       icon={<PlusOutlined />}
                       onClick={() => handleAddBook(book)}
+                      disabled={book._id ? true : false}
                     >
                       Add to Library
                     </Button>

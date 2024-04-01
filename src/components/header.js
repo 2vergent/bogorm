@@ -39,6 +39,7 @@ const BogormHeader = ({ onSearch }) => {
         size="large"
         allowClear
         onPressEnter={onSearch}
+        onChange={onSearch}
       />
       <Dropdown menu={{ items }} trigger={["click"]}>
         <Avatar
