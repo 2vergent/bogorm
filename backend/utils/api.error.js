@@ -1,15 +1,16 @@
-const ApiError = (statusCode, message, isOperational = true, stack = "") => {
-  const error = new Error(message);
-  error.statusCode = statusCode;
-  error.isOperational = isOperational;
+class ApiError extends Error {
+  constructor(statusCode, message, isOperational = true, stack = "") {
+    super(message);
+    this.name = this.constructor.name;
+    this.statusCode = statusCode;
+    this.isOperational = isOperational;
 
-  if (stack) {
-    error.stack = stack;
-  } else {
-    Error.captureStackTrace(error, ApiError);
+    if (stack) {
+      this.stack = stack;
+    } else {
+      Error.captureStackTrace(this, this.constructor);
+    }
   }
-
-  return error;
-};
+}
 
 module.exports = ApiError;

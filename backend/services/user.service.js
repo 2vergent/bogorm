@@ -17,7 +17,7 @@ const userlogin = async (username, password) => {
     }
 
     console.log("User is verified");
-    return { success: true, message: "User is verified" };
+    return { success: true, message: "User is verified", user };
   } catch (error) {
     console.error("Error occurred during login:", error);
     return { success: false, message: "An error occurred during login" };

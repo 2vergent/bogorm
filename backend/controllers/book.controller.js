@@ -11,6 +11,7 @@ const addBook = async (req, res) => {
       description,
       averageRating,
       categories,
+      imageLinks,
     } = req.body;
     const bookData = {
       title,
@@ -21,6 +22,7 @@ const addBook = async (req, res) => {
       description,
       averageRating,
       categories,
+      imageLinks,
     };
     const result = await bookService.addBook(bookData);
     if (result.success) {

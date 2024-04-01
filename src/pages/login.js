@@ -5,14 +5,18 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Divider, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { userLoginApi } from "../api/userApi";
+import { UserAtom } from "../utils/store";
+import { useRecoilState } from "recoil";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useRecoilState(UserAtom);
 
   const onFinish = (values) => {
     userLoginApi(values.username, values.password).then((res) => {
       if (res.data.message === "User is verified") {
         localStorage.setItem("isAuth", "true");
+        setUserData(res.data.user);
         navigate("/home");
       } else if (res.data === "User doesn't exist") {
         alert("User not registered");

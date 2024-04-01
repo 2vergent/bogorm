@@ -10,11 +10,16 @@ import { bookTitles } from "../utils/data";
 import BogormLogo from "../assets/icons/bogorm_logo_transparent.png";
 import BookCard from "../components/bookCard";
 import { getBookOnlineApi } from "../api/bookApi";
+import { UserAtom } from "../utils/store";
+import { useRecoilValue } from "recoil";
+import { getUserBooksApi } from "../api/userBookApi";
 
 const { Header, Content } = Layout;
 const { Search } = Input;
 
 const Homepage = () => {
+  const userData = useRecoilValue(UserAtom);
+  const [userBooks, setUserBooks] = useState([]);
   const [searchBook, setSearchBook] = useState("");
   const [searchResponse, setSearchResponse] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,14 +38,19 @@ const Homepage = () => {
   };
 
   const handlePageChange = (page, pageSize) => {
+    setLoader(true);
+    handleSearchBook(searchBook, page, pageSize);
     setCurrentPage(page);
     setPageSize(pageSize);
   };
 
   useEffect(() => {
     setLoader(true);
-    handleSearchBook(searchBook, currentPage, pageSize);
-  }, [currentPage, pageSize]);
+    getUserBooksApi(userData._id).then((res) => {
+      setLoader(false);
+      setUserBooks(res.data);
+    });
+  }, []);
 
   return (
     <Layout id="homepage-layout">
@@ -66,10 +76,11 @@ const Homepage = () => {
             <Col span={24}>
               {loader && (
                 <Spin
+                  className="loading-animation"
                   indicator={
                     <LoadingOutlined
                       style={{
-                        fontSize: 24,
+                        fontSize: 50,
                       }}
                       spin
                     />
@@ -78,19 +89,26 @@ const Homepage = () => {
               )}
               {searchBook.length === 0 && (
                 <Row gutter={[24, 24]}>
-                  {bookTitles.map((book, index) => (
-                    <Col
-                      key={index}
-                      xs={12}
-                      sm={12}
-                      md={8}
-                      lg={6}
-                      xl={4}
-                      align="center"
-                    >
-                      <BookCard key={index} title={`${book}`} />
-                    </Col>
-                  ))}
+                  {userBooks &&
+                    userBooks.map((userBook, index) => {
+                      return (
+                        <Col
+                          key={index}
+                          xs={12}
+                          sm={12}
+                          md={8}
+                          lg={6}
+                          xl={4}
+                          align="center"
+                        >
+                          <BookCard
+                            key={index}
+                            bookDetails={userBook.book}
+                            searched={false}
+                          />
+                        </Col>
+                      );
+                    })}
                 </Row>
               )}
               {searchBook.length !== 0 && (
@@ -108,20 +126,26 @@ const Homepage = () => {
                           xl={4}
                           align="center"
                         >
-                          <BookCard key={index} bookDetails={book.volumeInfo} />
+                          <BookCard
+                            key={index}
+                            bookDetails={book.volumeInfo}
+                            searched={true}
+                          />
                         </Col>
                       );
                     })}
                 </Row>
               )}
-              <div className="mt-20 mb-20">
-                <Pagination
-                  current={currentPage}
-                  pageSize={pageSize}
-                  total={searchResponse.totalItems}
-                  onChange={handlePageChange}
-                />
-              </div>
+              {!loader && (
+                <div className="mt-20 mb-20">
+                  <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={searchResponse.totalItems}
+                    onChange={handlePageChange}
+                  />
+                </div>
+              )}
             </Col>
           </Row>
         </div>

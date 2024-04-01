@@ -1,32 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Card, Image, Rate } from "antd";
-import axios from "axios";
+import { PlusOutlined } from "@ant-design/icons";
 import BookDetails from "./bookDetails";
+import { UserAtom } from "../utils/store";
+import { useRecoilValue } from "recoil";
+import { addBookApi } from "../api/bookApi";
+import { addUserBookApi } from "../api/userBookApi";
 
 const { Meta } = Card;
 
-const BookCard = ({ bookDetails }) => {
+const BookCard = ({ bookDetails, searched }) => {
   // console.log("bookDetails: ", bookDetails);
-  // const [bookDetails, setBookDetails] = useState(null);
+  // console.log("searched: ", searched);
+
   const [loadingBook, setLoadingBook] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  // useEffect(() => {
-  //   const fetchBookDetails = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://www.googleapis.com/books/v1/volumes?q=${title}`
-  //       );
-  //       const book = response.data.items[0].volumeInfo;
-  //       setBookDetails(book);
-  //       setLoadingBook(false);
-  //     } catch (error) {
-  //       console.error("Error fetching book details:", error);
-  //     }
-  //   };
-
-  //   fetchBookDetails();
-  // }, [title]);
+  const userData = useRecoilValue(UserAtom);
 
   const handleCardClick = () => {
     setIsModalVisible(true);
@@ -34,6 +23,28 @@ const BookCard = ({ bookDetails }) => {
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
+  };
+
+  const handleAddBook = (book) => {
+    addBookApi({
+      title: book.title,
+      authors: book.authors,
+      publishedDate: book.publishedDate,
+      publisher: book.publisher,
+      pageCount: book.pageCount,
+      description: book.description,
+      averageRating: book.averageRating,
+      categories: book.categories,
+      imageLinks: { thumbnail: book.imageLinks.thumbnail },
+    }).then((newBook) => {
+      console.log("newBook: ", newBook);
+      addUserBookApi(userData._id, newBook.data.book._id).then((res) => {
+        console.log("userId: ", userData._id);
+        console.log("bookId: ", res._id);
+        console.log("Added Book: ", newBook);
+        console.log("Added UserBook: ", res);
+      });
+    });
   };
 
   return (
@@ -52,6 +63,19 @@ const BookCard = ({ bookDetails }) => {
               height={270}
             />
           )
+        }
+        actions={
+          searched
+            ? [
+                <PlusOutlined
+                  key="add"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    handleAddBook(bookDetails);
+                  }}
+                />,
+              ]
+            : []
         }
       >
         {bookDetails && (

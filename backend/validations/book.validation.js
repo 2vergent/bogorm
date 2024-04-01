@@ -3,13 +3,14 @@ const Joi = require("joi");
 const addBook = {
   body: Joi.object().keys({
     title: Joi.string().required(),
-    authors: Joi.array().items(Joi.string()),
+    authors: Joi.array(),
     publishedDate: Joi.string(),
     publisher: Joi.string(),
     pageCount: Joi.number().integer().min(0),
     description: Joi.string(),
     averageRating: Joi.number().min(0).max(5),
-    categories: Joi.array().items(Joi.string()),
+    categories: Joi.array(),
+    imageLinks: Joi.object(),
   }),
 };
 
@@ -26,13 +27,14 @@ const editBookDetails = {
   body: Joi.object()
     .keys({
       title: Joi.string().required(),
-      authors: Joi.array().items(Joi.string()),
+      authors: Joi.array(),
       publishedDate: Joi.string(),
       publisher: Joi.string(),
       pageCount: Joi.number().integer().min(0),
       description: Joi.string(),
       averageRating: Joi.number().min(0).max(5),
-      categories: Joi.array().items(Joi.string()),
+      categories: Joi.array(),
+      imageLinks: Joi.object(),
     })
     .min(1),
 };

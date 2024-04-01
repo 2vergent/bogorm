@@ -4,13 +4,14 @@ const paginate = require("../models/plugins/paginate");
 
 const bookSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  authors: { type: [String], default: [] },
+  authors: { type: Array },
   publishedDate: { type: String },
   publisher: { type: String },
   pageCount: { type: Number },
   description: { type: String },
   averageRating: { type: Number },
-  categories: { type: [String], default: [] },
+  categories: { type: Array },
+  imageLinks: { type: Object },
 });
 
 bookSchema.plugin(aggregatePaginate);
