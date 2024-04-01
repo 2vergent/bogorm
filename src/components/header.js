@@ -1,14 +1,32 @@
 import React from "react";
-import { Layout, Image, Input, Avatar } from "antd";
-import { SearchOutlined, UserOutlined } from "@ant-design/icons";
+import { Layout, Image, Input, Avatar, Dropdown } from "antd";
+import {
+  SearchOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import BogormLogo from "../assets/icons/bogorm_logo_transparent.png";
 import { useNavigate } from "react-router";
 
 const { Header } = Layout;
 const { Search } = Input;
 
-const BogormHeader = ({ onSearch, onAvatarClick }) => {
+const BogormHeader = ({ onSearch }) => {
   const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
+  const items = [
+    {
+      label: "Log Out",
+      key: "1",
+      icon: <LogoutOutlined />,
+      onClick: handleLogOut,
+    },
+  ];
 
   return (
     <Header id="header">
@@ -22,11 +40,13 @@ const BogormHeader = ({ onSearch, onAvatarClick }) => {
         allowClear
         onPressEnter={onSearch}
       />
-      <Avatar
-        className="user-icon"
-        icon={<UserOutlined />}
-        onClick={onAvatarClick}
-      />
+      <Dropdown menu={{ items }} trigger={["click"]}>
+        <Avatar
+          className="user-icon"
+          icon={<UserOutlined />}
+          style={{ cursor: "pointer" }}
+        />
+      </Dropdown>
     </Header>
   );
 };

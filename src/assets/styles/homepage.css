@@ -59,3 +59,9 @@
   min-width: 100%;
   min-height: calc(100vh - 150px);
 }
+
+.review-form {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 0px 20px 20px 20px;
+}

@@ -46,10 +46,20 @@
 
 .signup-form-button {
   width: 100%;
-  background-color: #111111;
+  background: #45230c;
   box-shadow: none;
+  transition: background 0.3s ease;
 }
 
 .signup-form-button:hover {
-  background-color: #232323 !important;
+  background: #ceb035 !important;
+}
+
+.signup-form-button > span {
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.signup-form-button:hover > span {
+  color: #45230c;
 }

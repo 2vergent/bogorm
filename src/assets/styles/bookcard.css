@@ -1,0 +1,26 @@
+#book-card .ant-card-cover {
+  margin-inline-start: 0px !important;
+}
+
+#book-card .ant-card-body {
+  color: #fff !important;
+}
+
+#book-card .ant-card-meta-detail > div:not(:last-child) {
+  margin-bottom: 0px !important;
+}
+
+#book-card .ant-card-actions {
+  background-color: #ceb035;
+}
+
+#book-card .ant-card-actions .add-book-icon {
+  font-weight: 600 !important;
+  color: #fff !important;
+  font-size: 20px !important;
+  transition: color 0.3s ease;
+}
+
+#book-card .ant-card-actions .add-book-icon:hover {
+  color: #653719 !important;
+}

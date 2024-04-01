@@ -1,4 +1,5 @@
 const { userBookService } = require("../services");
+const pick = require("../utils");
 
 const addBookToUser = async (req, res) => {
   try {
@@ -21,5 +22,18 @@ const getUserBooks = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// const getUserBooks = async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const options = pick(req.query, ["sortBy", "limit", "page"]);
+
+//     const userBooks = await userBookService.getUserBooks(userId, options);
+//     res.status(200).json(userBooks);
+//   } catch (error) {
+//     console.error("Error fetching user books:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
 
 module.exports = { addBookToUser, getUserBooks };

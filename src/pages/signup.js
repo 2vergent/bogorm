@@ -4,20 +4,23 @@ import { Button, Form, Input, Divider } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import BogormLogo from "../assets/icons/bogorm_logo_transparent.png";
 import { userSignupApi } from "../api/userApi";
-
-const onFinish = (values) => {
-  console.log(values);
-  userSignupApi(values.name, values.username, values.password).then((res) => {
-    if (res.data.message === "Username is already taken") {
-      alert("Username already taken");
-    } else if (res.data.message === "User signed up successfully") {
-      console.log("User added");
-      alert("User registered");
-    }
-  });
-};
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
+  const onFinish = (values) => {
+    console.log(values);
+    userSignupApi(values.name, values.username, values.password).then((res) => {
+      if (res.data.message === "Username is already taken") {
+        alert("Username already taken");
+      } else if (res.data.message === "User signed up successfully") {
+        console.log("User added");
+        navigate("/login");
+      }
+    });
+  };
+
   return (
     <div className="signup-screen">
       <div className="logo-signup">

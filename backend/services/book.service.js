@@ -2,6 +2,24 @@ const { Book } = require("../models");
 
 const addBook = async (bookData) => {
   try {
+    const existingBook = await Book.findOne({
+      title: bookData.title,
+      authors: bookData.authors,
+      publishedDate: bookData.publishedDate,
+      publisher: bookData.publisher,
+      pageCount: bookData.pageCount,
+      description: bookData.description,
+      imageLinks: { thumbnail: bookData.imageLinks.thumbnail },
+    });
+
+    if (existingBook) {
+      return {
+        success: true,
+        message: "Book already exists",
+        book: existingBook,
+      };
+    }
+
     const book = await Book.create(bookData);
     return { success: true, message: "Book added successfully", book };
   } catch (error) {

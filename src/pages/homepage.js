@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../assets/styles/homepage.css";
-import { Layout, Row, Col, Input, Pagination, Spin } from "antd";
+import { Layout, Row, Col, Pagination, Spin, Empty } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import BookCard from "../components/bookCard";
 import { getBookOnlineApi } from "../api/bookApi";
@@ -33,6 +33,7 @@ const Homepage = () => {
 
   const handlePageChange = (page, pageSize) => {
     setLoader(true);
+    setSearchResponse([]);
     handleSearchBook(searchBook, page, pageSize);
     setCurrentPage(page);
     setPageSize(pageSize);
@@ -58,6 +59,17 @@ const Homepage = () => {
         <div className="content-wrapper">
           <Row>
             <Col span={24}>
+              {!loader && userBooks.length === 0 && (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description={
+                    <span>
+                      Your Library is empty. Search for books to add them to
+                      your library.
+                    </span>
+                  }
+                />
+              )}
               {loader && (
                 <Spin
                   className="loading-animation"
@@ -120,8 +132,8 @@ const Homepage = () => {
                     })}
                 </Row>
               )}
-              {!loader && userBooks.length !== 0 && (
-                <div className="mt-20 mb-20">
+              {!loader && searchResponse.length !== 0 && (
+                <div className="mt-30 mb-10">
                   <Pagination
                     current={currentPage}
                     pageSize={pageSize}

@@ -52,12 +52,22 @@
 
 .login-form-button {
   width: 100%;
-  background-color: #ceb035;
+  background: #45230c;
   box-shadow: none;
+  transition: background 0.3s ease;
 }
 
 .login-form-button:hover {
-  background-color: #45230c !important;
+  background: #ceb035 !important;
+}
+
+.login-form-button > span {
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.login-form-button:hover > span {
+  color: #45230c;
 }
 
 .register-text {
@@ -66,10 +76,10 @@
 }
 
 .actual-register {
-  color: #111111;
+  color: #fff;
   padding-left: 10px;
 }
 
 .actual-register:hover {
-  color: #767676;
+  color: #ceb035;
 }

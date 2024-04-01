@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import "../assets/styles/bookcard.css";
 import { useNavigate } from "react-router";
-import { Card, Image, Rate } from "antd";
+import { Card, Image, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { UserAtom } from "../utils/store";
 import { useRecoilValue } from "recoil";
@@ -10,19 +11,16 @@ import { addUserBookApi } from "../api/userBookApi";
 const { Meta } = Card;
 
 const BookCard = ({ bookDetails, searched }) => {
-  // console.log("bookDetails: ", bookDetails);
-  // console.log("searched: ", searched);
-
-  const [loadingBook, setLoadingBook] = useState(true);
+  const [loadingBook, setLoadingBook] = useState(false);
   const userData = useRecoilValue(UserAtom);
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    // setIsModalVisible(true);
     navigate("/book", { state: { book: bookDetails } });
   };
 
   const handleAddBook = (book) => {
+    setLoadingBook(true);
     addBookApi({
       title: book.title,
       authors: book.authors,
@@ -34,12 +32,13 @@ const BookCard = ({ bookDetails, searched }) => {
       categories: book.categories,
       imageLinks: { thumbnail: book.imageLinks.thumbnail },
     }).then((newBook) => {
-      console.log("newBook: ", newBook);
       addUserBookApi(userData._id, newBook.data.book._id).then((res) => {
-        console.log("userId: ", userData._id);
-        console.log("bookId: ", res._id);
-        console.log("Added Book: ", newBook);
-        console.log("Added UserBook: ", res);
+        setLoadingBook(false);
+        if (newBook.data.message === "Book already exists") {
+          message.warning("This book is already in your library");
+        } else {
+          message.success("Book added to your library");
+        }
       });
     });
   };
@@ -47,7 +46,8 @@ const BookCard = ({ bookDetails, searched }) => {
   return (
     <>
       <Card
-        // loading={loadingBook}
+        loading={loadingBook}
+        id="book-card"
         style={{ width: 190 }}
         hoverable
         size="small"
@@ -66,9 +66,10 @@ const BookCard = ({ bookDetails, searched }) => {
           searched
             ? [
                 <PlusOutlined
+                  className="add-book-icon"
                   key="add"
                   onClick={(event) => {
-                    event.preventDefault();
+                    event.stopPropagation();
                     handleAddBook(bookDetails);
                   }}
                 />,
@@ -94,13 +95,6 @@ const BookCard = ({ bookDetails, searched }) => {
             }
           />
         )}
-        {/* <Rate
-          allowHalf
-          allowClear
-          disabled
-          defaultValue={bookDetails && bookDetails.averageRating}
-          className="mt-10"
-        /> */}
       </Card>
     </>
   );

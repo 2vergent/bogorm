@@ -76,7 +76,7 @@ const Login = () => {
                 htmlType="submit"
                 className="login-form-button"
               >
-                Log in
+                Login
               </Button>
               <div className="register-text">
                 Or{" "}
